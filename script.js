@@ -4,11 +4,11 @@ let clickPower = 1;
 let autoPower = 0;
 
 const upgrades = {
-    toy:    { id: 'toy',    price: 15,   gain: 1,  type: 'click' },
-    milk:   { id: 'milk',   price: 100,  gain: 3,  type: 'click' },
-    box:    { id: 'box',    price: 50,   gain: 1,  type: 'auto' },
-    bed:    { id: 'bed',    price: 250,  gain: 5,  type: 'auto' },
-    friend: { id: 'friend', price: 1000, gain: 20, type: 'auto' }
+    toy:    { id: 'toy',    price: 150,   gain: 1,  type: 'click' },
+    milk:   { id: 'milk',   price: 1000,  gain: 3,  type: 'click' },
+    box:    { id: 'box',    price: 500,   gain: 1,  type: 'auto' },
+    bed:    { id: 'bed',    price: 2500,  gain: 5,  type: 'auto' },
+    friend: { id: 'friend', price: 10000, gain: 20, type: 'auto' }
 };
 
 // --- Achievements Definition ---
