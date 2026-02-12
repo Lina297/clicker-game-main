@@ -20,14 +20,12 @@ const achievements = [
     { id: 'click_master', text: "Power Paw", desc: "Reach 10 CPC (Click Power)", condition: () => clickPower >= 10, unlocked: false }
 ];
 
-// --- Multiplier Variables ---
 let meterValue = 0;
 const METER_MAX = 100;
 const METER_DECAY = 10;
 const METER_GAIN = 20;
 let hasMultiplier = false;
 
-// --- DOM Elements ---
 const elScore = document.getElementById('score');
 const elCpc = document.getElementById('cpc-display');
 const elCps = document.getElementById('cps-display');
@@ -45,11 +43,9 @@ clickPad.addEventListener('click', (e) => {
     
     updateUI();
     checkAchievements();
-    
-    // VISUALS
+
     showFloatingText(e.clientX, e.clientY, `+${totalGain}${currentMultiplier > 1 ? ' x2!' : ''}`);
-    
-    // SPAWN RAIN (3 cats per click for chaos)
+
     spawnCatRain(e.clientX, e.clientY);
     spawnCatRain(e.clientX, e.clientY);
     spawnCatRain(e.clientX, e.clientY);
@@ -69,7 +65,6 @@ setInterval(() => {
     elMeter.style.width = `${meterValue}%`;
 }, 100);
 
-// --- Shop Events ---
 for (const key in upgrades) {
     const item = upgrades[key];
     const btn = document.getElementById(`btn-${key}`);
@@ -87,7 +82,9 @@ for (const key in upgrades) {
     }
 }
 
-// --- Achievement Logic ---
+const clickSound = new Audio('./sounds/miauw.mp3');
+clickSound.playbackSpeed = 2.0;
+
 function checkAchievements() {
     achievements.forEach(ach => {
         if (!ach.unlocked && ach.condition()) {
