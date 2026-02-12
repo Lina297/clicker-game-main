@@ -20,12 +20,14 @@ const achievements = [
     { id: 'click_master', text: "Power Paw", desc: "Reach 10 CPC (Click Power)", condition: () => clickPower >= 10, unlocked: false }
 ];
 
+// --- Multiplier Variables ---
 let meterValue = 0;
 const METER_MAX = 100;
 const METER_DECAY = 10;
 const METER_GAIN = 20;
 let hasMultiplier = false;
 
+// --- DOM Elements ---
 const elScore = document.getElementById('score');
 const elCpc = document.getElementById('cpc-display');
 const elCps = document.getElementById('cps-display');
@@ -33,14 +35,22 @@ const elRank = document.getElementById('rank-display');
 const clickPad = document.getElementById('click-pad');
 const elMeter = document.getElementById('multiplier-meter');
 const achListContainer = document.getElementById('achievements-list');
-const clickSound = new Audio('./sounds/click_002.ogg'); // Ensure you have a click sound at this path
 
+// --- AUDIO SETUP ---
+// 1. Main Click Sound
+const clickSound = new Audio('./sounds/miauw.mp3');
+clickSound.playbackSpeed = 2.0; 
+
+// 2. Shop/Buy Sound (Make sure you have this file!)
+// You can use a cash register sound or a pop sound
+const buySound = new Audio('./sounds/click_002.ogg'); 
+
+// --- CORE CLICK EVENT ---
 clickPad.addEventListener('click', (e) => {
-    // --- SOUND START ---
-    const sound = clickSound.cloneNode(); // Allows overlapping sounds for fast clicking
-    sound.volume = 0.5; // Optional: Set volume (0.0 to 1.0)
+    // Play Click Sound
+    const sound = clickSound.cloneNode(); 
+    sound.volume = 0.5; 
     sound.play();
-    // --- SOUND END ---
 
     let currentMultiplier = (meterValue >= 80) ? 2 : 1; 
     let totalGain = clickPower * currentMultiplier;
@@ -53,11 +63,13 @@ clickPad.addEventListener('click', (e) => {
 
     showFloatingText(e.clientX, e.clientY, `+${totalGain}${currentMultiplier > 1 ? ' x2!' : ''}`);
 
+    // Spawn 3 cats
     spawnCatRain(e.clientX, e.clientY);
     spawnCatRain(e.clientX, e.clientY);
     spawnCatRain(e.clientX, e.clientY);
 });
 
+// --- METER LOOP ---
 setInterval(() => {
     if (meterValue > 0) meterValue -= METER_DECAY;
     else meterValue = 0;
@@ -72,12 +84,19 @@ setInterval(() => {
     elMeter.style.width = `${meterValue}%`;
 }, 100);
 
+// --- SHOP EVENTS (UPDATED WITH SOUND) ---
 for (const key in upgrades) {
     const item = upgrades[key];
     const btn = document.getElementById(`btn-${key}`);
     if (btn) {
         btn.addEventListener('click', () => {
             if (score >= item.price) {
+                // --- NEW: Play Buy Sound ---
+                const sound = buySound.cloneNode();
+                sound.volume = 0.5; // Adjust volume here
+                sound.play();
+                // ---------------------------
+
                 score -= item.price;
                 if (item.type === 'click') clickPower += item.gain;
                 else autoPower += item.gain;
@@ -89,15 +108,12 @@ for (const key in upgrades) {
     }
 }
 
-const clickSound = new Audio('./sounds/miauw.mp3');
-clickSound.playbackSpeed = 2.0;
-
+// --- Achievement Logic ---
 function checkAchievements() {
     achievements.forEach(ach => {
         if (!ach.unlocked && ach.condition()) {
             ach.unlocked = true;
             renderAchievements();
-            // You can add a toast notification here if you want
         }
     });
 }

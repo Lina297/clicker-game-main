@@ -1,12 +1,54 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Bild zentrieren</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake: Polished</title>
+    <link rel="stylesheet" href="style2.css">
 </head>
-<body style="margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh;"></body>
+<body>
 
-  <img src="./images/kitten-lying-in-blanket.jpg" alt="Bild" style="width: 300px;">
+    <div class="app-container">
+        
+        <div class="header">
+            <div class="score-card">
+                <span class="label">SCORE</span>
+                <span class="value" id="score">0</span>
+            </div>
+            <div class="score-card best">
+                <span class="label">BEST</span>
+                <span class="value" id="high-score">0</span>
+            </div>
+        </div>
 
+        <div class="game-wrapper">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+            
+            <div id="menu-overlay" class="overlay">
+                <div class="card">
+                    <h1 class="game-title">SNAKE</h1>
+                    <div class="theme-select">
+                        <button class="theme-dot active" data-theme="candy" style="background: #FF6B6B;"></button>
+                        <button class="theme-dot" data-theme="ocean" style="background: #4834d4;"></button>
+                        <button class="theme-dot" data-theme="nature" style="background: #6ab04c;"></button>
+                    </div>
+                    <button id="start-btn" class="play-btn">PLAY</button>
+                    <p class="hint">Use Arrow Keys</p>
+                </div>
+            </div>
+
+            <div id="game-over-overlay" class="overlay hidden">
+                <div class="card">
+                    <h2>GAME OVER</h2>
+                    <div class="final-score">Score: <span id="final-score">0</span></div>
+                    <button id="restart-btn" class="play-btn">RETRY</button>
+                    <button id="home-btn" class="menu-btn">MENU</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script2.js"></script>
 </body>
 </html>
