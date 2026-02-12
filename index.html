@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Clicker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <section class="cat-zone">
+            <div class="header-info">
+                <span class="rank-badge" id="rank-display">Noob</span>
+                <h1 id="score">0</h1>
+                <p>Items Collected</p>
+            </div>
+
+            <div class="cat-wrapper">
+                <div id="click-pad">
+                    <img src="./images/download-removebg-preview.png" alt="Meme" class="cat-img">
+                </div>
+            </div>
+
+            <div class="meter-container">
+                <div id="multiplier-meter" class="meter-fill"></div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <span>CPC:</span> <strong id="cpc-display">1</strong>
+                </div>
+                <div class="stat-box">
+                    <span>CPS:</span> <strong id="cps-display">0</strong>
+                </div>
+            </div>
+        </section>
+        <section class="shop-zone">
+            <h2>UPGRADES</h2>
+            <div class="shop-items">
+                <button class="shop-btn" id="btn-toy">
+                    <div class="details">
+                        <span class="name">Basic Item</span>
+                        <span class="bonus">+1 CPC</span>
+                    </div>
+                    <div class="price-tag" id="cost-toy">15</div>
+                </button>
+
+                <button class="shop-btn" id="btn-milk">
+                    <div class="details">
+                        <span class="name">Better Item</span>
+                        <span class="bonus">+3 CPC</span>
+                    </div>
+                    <div class="price-tag" id="cost-milk">100</div>
+                </button>
+
+                <hr class="divider">
+
+                <button class="shop-btn" id="btn-box">
+                    <div class="details">
+                        <span class="name">Auto Bot</span>
+                        <span class="bonus">+1 CPS</span>
+                    </div>
+                    <div class="price-tag" id="cost-box">50</div>
+                </button>
+
+                <button class="shop-btn" id="btn-bed">
+                    <div class="details">
+                        <span class="name">Mega Bot</span>
+                        <span class="bonus">+5 CPS</span>
+                    </div>
+                    <div class="price-tag" id="cost-bed">250</div>
+                </button>
+                
+                <button class="shop-btn" id="btn-friend">
+                    <div class="details">
+                        <span class="name">Ultimate Bot</span>
+                        <span class="bonus">+20 CPS</span>
+                    </div>
+                    <div class="price-tag" id="cost-friend">1000</div>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <button id="achievements-toggle" class="ach-toggle-btn">ACHIEVEMENTS</button>
+
+    <div id="achievements-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>LOGS</h2>
+                <button id="close-modal">&times;</button>
+            </div>
+            <div id="achievements-list" class="modal-body">
+                <p>Achievement unlocked.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

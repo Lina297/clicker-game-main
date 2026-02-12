@@ -1,0 +1,355 @@
+:root {
+    --bg-color: #3e2723;       /* Darkest wood */
+    --panel-bg: #5d4037;       /* Medium wood */
+    --inner-bg: #d7ccc8;       /* Light paper/sand */
+    --primary: #2b1d1a;        /* Border brown */
+    --accent: #8d6e63;         /* Button brown */
+    --text-main: #2b1d1a;      
+    --text-light: #5d4037;     
+    --gold: #f9a825;           /* Multiplier gold */
+}
+
+body {
+    margin: 0;
+    font-family: 'Tahoma', sans-serif;
+    /* Cookie Clicker style tiled background effect */
+    background: repeating-linear-gradient(
+        45deg,
+        #3e2723,
+        #3e2723 10px,
+        #4e342e 10px,
+        #4e342e 20px
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; 
+    position: relative;
+
+    /* --- ADD THESE LINES TO STOP THE BLUE HIGHLIGHT --- */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE10+/Edge */
+    user-select: none;         /* Standard */
+}
+
+/* --- THE GRITTY NOISE OVERLAY --- */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.3;
+}
+
+.main-container {
+    display: flex;
+    width: 900px;
+    height: 650px;
+    background: var(--panel-bg);
+    border-radius: 0px; 
+    border: 6px solid var(--primary);
+    box-shadow: 15px 15px 0px rgba(0,0,0,0.6); /* Hard shadow */
+    overflow: hidden;
+    transform: rotate(-1deg); /* CHAOS TILT */
+}
+
+/* --- Left Side: Cat Zone --- */
+.cat-zone {
+    flex: 1.3;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%);
+    box-shadow: inset -10px 0 20px rgba(0,0,0,0.3);
+}
+
+.header-info {
+    background: rgba(0,0,0,0.4);
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 4px solid var(--primary);
+    transform: rotate(1deg); /* Counter tilt */
+}
+
+.header-info h1 {
+    font-size: 4rem;
+    margin: 0;
+    color: #fff;
+    text-shadow: 3px 3px 0px var(--primary);
+}
+
+.header-info p {
+    color: var(--inner-bg);
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* --- The Cat Animation --- */
+.cat-wrapper {
+    position: relative;
+    width: 380px; 
+    height: 380px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#click-pad {
+    cursor: pointer;
+    transition: transform 0.05s;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
+
+#click-pad:active {
+    transform: scale(0.90) rotate(2deg); /* Shake */
+}
+
+.cat-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* --- NEW: Falling Cat Particles --- */
+.falling-cat {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 9990; 
+    animation: fallDown 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.5);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(calc(-50% + var(--endX) * 0.2), -100px) rotate(var(--endRot));
+    }
+    100% {
+        transform: translate(calc(-50% + var(--endX)), 800px) rotate(calc(var(--endRot) * 2));
+        opacity: 0;
+    }
+}
+
+/* --- Shop Zone --- */
+.shop-zone {
+    flex: 1;
+    background: rgba(0,0,0,0.2);
+    border-left: 6px solid var(--primary);
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.shop-zone h2 {
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    background: var(--primary);
+    margin: -15px -15px 15px -15px;
+    padding: 10px;
+    border-bottom: 3px solid #000;
+}
+
+.shop-btn {
+    width: 100%;
+    background: var(--inner-bg);
+    border: 3px solid var(--primary);
+    border-bottom: 6px solid var(--primary); /* 3D depth */
+    margin-bottom: 12px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s;
+}
+
+.shop-btn:hover:not(:disabled) {
+    background: #fff;
+}
+
+.shop-btn:active:not(:disabled) {
+    border-bottom: 3px solid var(--primary);
+    transform: translateY(3px);
+}
+
+.shop-btn:disabled {
+    filter: brightness(0.6) grayscale(1);
+    cursor: not-allowed;
+}
+
+.price-tag {
+    background: #4caf50;
+    color: white;
+    padding: 2px 8px;
+    font-weight: bold;
+    border: 2px solid var(--primary);
+    margin-left: auto;
+}
+
+/* --- Multiplier Meter --- */
+.meter-container {
+    width: 80%;
+    height: 20px;
+    background: #2b1d1a;
+    border: 3px solid #000;
+    margin: 10px 0;
+}
+
+.meter-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--gold);
+    box-shadow: inset 0 0 10px #fff;
+}
+
+.multiplier-active .meter-container {
+    animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    50% { transform: translate(-1px, -1px) rotate(-1deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+
+/* --- Floating Text --- */
+.floating-text {
+    position: absolute;
+    color: var(--gold);
+    -webkit-text-stroke: 1.5px #000;
+    font-weight: 900;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 10000;
+    animation: floatUp 0.6s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    50% { transform: translateY(-50px) scale(1.5); opacity: 1; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* --- Achievements Modal & List --- */
+.ach-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Moved to left to not block right side */
+    background: var(--primary);
+    color: white;
+    border: 4px solid #000;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    box-shadow: 5px 5px 0 #000;
+}
+
+.ach-toggle-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 #000;
+}
+
+.achievement-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 0px; /* ECKIG */
+    border-left: 5px solid #ccc;
+    border: 2px solid var(--primary);
+}
+
+.achievement-item.unlocked {
+    background: rgba(76, 175, 80, 0.2);
+    border-left-color: #4caf50;
+}
+
+.achievement-item.locked {
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+
+.achievement-item strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.achievement-item p {
+    margin: 2px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--inner-bg);
+    padding: 0;
+    border: 6px solid var(--primary);
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 15px 15px 0 #000;
+    animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.modal-header {
+    background: var(--primary);
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #000;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    color: var(--text-main);
+}
+
+#close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
