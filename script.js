@@ -35,8 +35,15 @@ const elRank = document.getElementById('rank-display');
 const clickPad = document.getElementById('click-pad');
 const elMeter = document.getElementById('multiplier-meter');
 const achListContainer = document.getElementById('achievements-list');
+const clickSound = new Audio('./sounds/click_002.ogg'); // Ensure you have a click sound at this path
 
 clickPad.addEventListener('click', (e) => {
+    // --- SOUND START ---
+    const sound = clickSound.cloneNode(); // Allows overlapping sounds for fast clicking
+    sound.volume = 0.5; // Optional: Set volume (0.0 to 1.0)
+    sound.play();
+    // --- SOUND END ---
+
     let currentMultiplier = (meterValue >= 80) ? 2 : 1; 
     let totalGain = clickPower * currentMultiplier;
     score += totalGain;
